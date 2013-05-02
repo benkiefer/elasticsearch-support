@@ -11,10 +11,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>pom</packaging>
+
     <properties>
         <elasticsearch.version>0.20.6</elasticsearch.version>
         <spring.version>3.1.2.RELEASE</spring.version>
     </properties>
+
     <artifactId>elasticsearch-support-parent</artifactId>
 
     <dependencyManagement>
