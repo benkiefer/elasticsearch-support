@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.burgers.elasticsearch</groupId>
-    <artifactId>elasticsearch-learning</artifactId>
+    <artifactId>elasticsearch-support</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
         <module>parent</module>
-        <module>config</module>
+        <module>client</module>
     </modules>
 
     <dependencies>
