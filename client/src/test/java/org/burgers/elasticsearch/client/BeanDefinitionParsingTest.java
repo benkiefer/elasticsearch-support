@@ -2,32 +2,50 @@ package org.burgers.elasticsearch.client;
 
 import org.burgers.elasticsearch.client.namespace.BeanDefinitionParserHelper;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.collect.ImmutableList;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
     @Test
     public void load_default_id() {
-        prepareContext("<elasticsearch:client/>");
+        String schemaDef = "<elasticsearch:client settings-file=\"elasticsearch.yml\">" +
+                                "<elasticsearch:node host=\"localhost\" port=\"20\"/>" +
+                                "<elasticsearch:node host=\"test.host\" port=\"25\"/>" +
+                            "</elasticsearch:client>";
+        prepareContext(schemaDef);
 
-        TransportClient client = (TransportClient) context.getBean("elasticsearchClient");
+        assertClient("elasticsearchClient");
+    }
+
+    private void assertClient(String beanId) {
+        TransportClient client = context.getBean(beanId, TransportClient.class);
         assertNotNull(client);
 
         Settings settings = client.settings();
         assertNotNull(settings);
+        assertEquals("foo", settings.get("cluster.name"));
+
+        assertNotNull(context.getBean(beanId + "_settings", Settings.class));
+
+        ImmutableList<TransportAddress> transportAddresses = client.transportAddresses();
+
+        assertEquals(2, transportAddresses.size());
     }
 
     @Test
     public void load_specified_id() {
-        prepareContext("<elasticsearch:client id=\"test\"/>");
+        String schemaDef = "<elasticsearch:client id=\"test\" settings-file=\"elasticsearch.yml\">" +
+                                "<elasticsearch:node host=\"localhost\" port=\"20\"/>" +
+                                "<elasticsearch:node host=\"test.host\" port=\"25\"/>" +
+                            "</elasticsearch:client>";
+        prepareContext(schemaDef);
 
-        TransportClient client = (TransportClient) context.getBean("test");
-        assertNotNull(client);
-
-        Settings settings = client.settings();
-        assertNotNull(settings);
+        assertClient("test");
     }
 
 }

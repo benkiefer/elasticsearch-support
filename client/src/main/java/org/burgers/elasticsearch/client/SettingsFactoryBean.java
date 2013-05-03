@@ -9,7 +9,7 @@ public class SettingsFactoryBean implements FactoryBean<Settings> {
 
     @Override
     public Settings getObject() throws Exception {
-        return ImmutableSettings.settingsBuilder().loadFromSource(settingsFile).build();
+        return ImmutableSettings.settingsBuilder().loadFromClasspath(settingsFile).build();
     }
 
     @Override
