@@ -2,6 +2,7 @@ package org.burgers.elasticsearch.client;
 
 import org.burgers.elasticsearch.client.namespace.BeanDefinitionParserHelper;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -13,6 +14,9 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
 
         TransportClient client = (TransportClient) context.getBean("elasticsearchClient");
         assertNotNull(client);
+
+        Settings settings = client.settings();
+        assertNotNull(settings);
     }
 
     @Test
@@ -21,7 +25,9 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
 
         TransportClient client = (TransportClient) context.getBean("test");
         assertNotNull(client);
-    }
 
+        Settings settings = client.settings();
+        assertNotNull(settings);
+    }
 
 }
