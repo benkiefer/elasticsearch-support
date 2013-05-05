@@ -22,10 +22,6 @@ public class ClientBeanDefinitionParser implements BeanDefinitionParser {
     public BeanDefinition parse(Element element, ParserContext parserContext) {
         String id = element.getAttribute("id");
 
-        String settings_id = id + "_settings";
-
-        String settingsFile = element.getAttribute("settings-file");
-
         List<Element> nodes = DomUtils.getChildElementsByTagName(element, "node");
 
         ManagedList<RuntimeBeanReference> addressListBean = new ManagedList<RuntimeBeanReference>(nodes.size());
@@ -34,28 +30,35 @@ public class ClientBeanDefinitionParser implements BeanDefinitionParser {
 
         for (Element node : nodes) {
             List<Integer> ports = portParser.parse(node.getAttribute("ports"));
+            String host = node.getAttribute("host");
 
             for (Integer port : ports) {
                 String inetAddressBeanId = id + "_node_" + index;
-                BeanDefinitionBuilder inetAddressBuilder = BeanDefinitionBuilder.genericBeanDefinition(InetSocketTransportAddress.class);
-                inetAddressBuilder.addConstructorArgValue(node.getAttribute("host"));
-                inetAddressBuilder.addConstructorArgValue(port);
+                BeanDefinitionBuilder inetAddressBuilder =
+                        BeanDefinitionBuilder.genericBeanDefinition(InetSocketTransportAddress.class)
+                                .addConstructorArgValue(host)
+                                .addConstructorArgValue(port);
 
                 parserContext.registerBeanComponent(new BeanComponentDefinition(inetAddressBuilder.getBeanDefinition(), inetAddressBeanId));
                 addressListBean.add(new RuntimeBeanReference(inetAddressBeanId));
                 index++;
             }
-
         }
 
-        BeanDefinitionBuilder settingsBuilder = BeanDefinitionBuilder.genericBeanDefinition(SettingsFactoryBean.class);
-        settingsBuilder.addPropertyValue("settingsFile", settingsFile);
+
+        String settings_id = id + "_settings";
+        String settingsFile = element.getAttribute("settings-file");
+
+        BeanDefinitionBuilder settingsBuilder =
+                BeanDefinitionBuilder.genericBeanDefinition(SettingsFactoryBean.class)
+                        .addPropertyValue("settingsFile", settingsFile);
 
         parserContext.registerBeanComponent(new BeanComponentDefinition(settingsBuilder.getBeanDefinition(), settings_id));
 
-        BeanDefinitionBuilder clientBuilder = BeanDefinitionBuilder.genericBeanDefinition(TransportClientFactoryBean.class);
-        clientBuilder.addPropertyReference("settings", settings_id);
-        clientBuilder.addPropertyValue("inetAddresses", addressListBean);
+        BeanDefinitionBuilder clientBuilder =
+                BeanDefinitionBuilder.genericBeanDefinition(TransportClientFactoryBean.class)
+                        .addPropertyReference("settings", settings_id)
+                        .addPropertyValue("inetAddresses", addressListBean);
 
         parserContext.registerBeanComponent(new BeanComponentDefinition(clientBuilder.getBeanDefinition(), id));
 
