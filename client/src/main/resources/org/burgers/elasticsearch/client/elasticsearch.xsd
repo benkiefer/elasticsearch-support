@@ -9,7 +9,7 @@
                 <xs:element name="node" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:attribute name="host" type="xs:string"/>
-                        <xs:attribute name="port" type="xs:int"/>
+                        <xs:attribute name="ports" type="CommaSeparatedListOfNumbers"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
@@ -17,5 +17,11 @@
             <xs:attribute name="settings-file" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+
+    <xs:simpleType name="CommaSeparatedListOfNumbers">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[0-9]+(,[0-9]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

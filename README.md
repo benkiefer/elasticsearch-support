@@ -10,8 +10,8 @@ Looking into the innards of elasticsearch, and how to integrate it with it in a 
 #Client
 
      <elasticsearch:client id="client" settings-file="elasticsearch.yml">
-          <elasticsearch:node host="localhost" port="9299"/>
-          <elasticsearch:node host="localhost" port="9300"/>
+          <elasticsearch:node host="localhost" ports="9255,9299"/>
+          <elasticsearch:node host="otherhost" ports="9300"/>
      </elasticsearch:client/>
 
 All beans are name-spaced under the client to avoid name collisions.

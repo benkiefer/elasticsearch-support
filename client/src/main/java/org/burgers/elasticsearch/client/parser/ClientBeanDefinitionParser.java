@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 public class ClientBeanDefinitionParser implements BeanDefinitionParser {
+    private PortParser portParser = new PortParser();
 
     @Override
     public BeanDefinition parse(Element element, ParserContext parserContext) {
@@ -30,15 +31,21 @@ public class ClientBeanDefinitionParser implements BeanDefinitionParser {
         ManagedList<RuntimeBeanReference> addressListBean = new ManagedList<RuntimeBeanReference>(nodes.size());
 
         int index = 0;
-        for (Element node : nodes) {
-            String inetAddressBeanId = id + "_node_" + index;
-            BeanDefinitionBuilder inetAddressBuilder = BeanDefinitionBuilder.genericBeanDefinition(InetSocketTransportAddress.class);
-            inetAddressBuilder.addConstructorArgValue(node.getAttribute("host"));
-            inetAddressBuilder.addConstructorArgValue(node.getAttribute("port"));
 
-            parserContext.registerBeanComponent(new BeanComponentDefinition(inetAddressBuilder.getBeanDefinition(), inetAddressBeanId));
-            addressListBean.add(new RuntimeBeanReference(inetAddressBeanId));
-            index++;
+        for (Element node : nodes) {
+            List<Integer> ports = portParser.parse(node.getAttribute("ports"));
+
+            for (Integer port : ports) {
+                String inetAddressBeanId = id + "_node_" + index;
+                BeanDefinitionBuilder inetAddressBuilder = BeanDefinitionBuilder.genericBeanDefinition(InetSocketTransportAddress.class);
+                inetAddressBuilder.addConstructorArgValue(node.getAttribute("host"));
+                inetAddressBuilder.addConstructorArgValue(port);
+
+                parserContext.registerBeanComponent(new BeanComponentDefinition(inetAddressBuilder.getBeanDefinition(), inetAddressBeanId));
+                addressListBean.add(new RuntimeBeanReference(inetAddressBeanId));
+                index++;
+            }
+
         }
 
         BeanDefinitionBuilder settingsBuilder = BeanDefinitionBuilder.genericBeanDefinition(SettingsFactoryBean.class);
