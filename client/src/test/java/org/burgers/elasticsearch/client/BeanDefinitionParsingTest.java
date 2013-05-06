@@ -14,8 +14,8 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
     @Test
     public void load_default_id() {
         String schemaDef = "<elasticsearch:client settings-file=\"elasticsearch.yml\">" +
-                                "<elasticsearch:node host=\"localhost\" ports=\"20,21\"/>" +
-                                "<elasticsearch:node host=\"test.host\" ports=\"25\"/>" +
+                                "<elasticsearch:node host=\"localhost\" ports=\"2980,2981\"/>" +
+                                "<elasticsearch:node host=\"localhost\" ports=\"2986\"/>" +
                             "</elasticsearch:client>";
         prepareContext(schemaDef);
 
@@ -40,8 +40,8 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
     @Test
     public void load_specified_id() {
         String schemaDef = "<elasticsearch:client id=\"test\" settings-file=\"elasticsearch.yml\">" +
-                                "<elasticsearch:node host=\"localhost\" ports=\"20,21\"/>" +
-                                "<elasticsearch:node host=\"test.host\" ports=\"25\"/>" +
+                                "<elasticsearch:node host=\"localhost\" ports=\"2980,2981\"/>" +
+                                "<elasticsearch:node host=\"localhost\" ports=\"2986\"/>" +
                             "</elasticsearch:client>";
         prepareContext(schemaDef);
 

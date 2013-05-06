@@ -36,10 +36,13 @@
                 <groupId>org.burgers.elasticsearch</groupId>
                 <artifactId>elasticsearch-maven-plugin</artifactId>
                 <version>${project.version}</version>
+                <configuration>
+                    <settingsFile>${basedir}/src/test/resources/elasticsearch.yml</settingsFile>
+                </configuration>
                 <executions>
                     <execution>
                         <id>run-elasticsearch</id>
-                        <phase>test</phase>
+                        <phase>test-compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
