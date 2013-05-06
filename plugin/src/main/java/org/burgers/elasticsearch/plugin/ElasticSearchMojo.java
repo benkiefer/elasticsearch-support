@@ -3,6 +3,8 @@ package org.burgers.elasticsearch.plugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
@@ -12,19 +14,13 @@ import java.io.File;
 
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
-/**
- * Starts Elasticsearch.
- *
- * @goal run
- * @requiresProject false
- */
+@Mojo(name = "run", requiresProject = false)
 public class ElasticSearchMojo extends AbstractMojo {
 
-    /**
-     * Settings file.
-     *
-     * @parameter
+    /*
+        Location of Elasticsearch YML settings file
      */
+    @Parameter(property = "elasticsearch.yml.location")
     private File settingsFile;
 
     @Override
