@@ -15,6 +15,8 @@
     <properties>
         <elasticsearch.version>0.20.6</elasticsearch.version>
         <spring.version>3.1.2.RELEASE</spring.version>
+        <mockito.version>1.9.5</mockito.version>
+        <powermock-api-mockito.version>1.5</powermock-api-mockito.version>
     </properties>
 
     <artifactId>elasticsearch-support-parent</artifactId>
@@ -25,6 +27,24 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.10</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock-api-mockito.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock-api-mockito.version}</version>
             </dependency>
 
             <dependency>

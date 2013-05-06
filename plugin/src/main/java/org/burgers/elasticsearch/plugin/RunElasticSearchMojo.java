@@ -49,4 +49,7 @@ public class RunElasticSearchMojo extends AbstractMojo {
         return settings;
     }
 
+    public void setSettingsFile(File settingsFile) {
+        this.settingsFile = settingsFile;
+    }
 }

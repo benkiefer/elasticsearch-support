@@ -2,6 +2,8 @@
 
 A Maven plugin for running elasticsearch and some namespace goodies for instantiating a spring client.
 
+[![Build Status](https://secure.travis-ci.org/benkiefer/elasticsearch-support.png?branch=master)](http://travis-ci.org/benkiefer/elasticsearch-support)
+
 #Client
 
      <elasticsearch:client id="client" settings-file="elasticsearch.yml">

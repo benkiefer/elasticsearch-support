@@ -17,7 +17,7 @@ import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 @Mojo(name = "start", requiresProject = false)
 public class StartElasticSearchMojo extends AbstractMojo {
 
-    public static Node node;
+    private static Node node;
 
     /*
         Location of Elasticsearch YML settings file
@@ -49,6 +49,14 @@ public class StartElasticSearchMojo extends AbstractMojo {
             settings = ImmutableSettings.settingsBuilder().loadFromClasspath(settingsFile.getAbsolutePath()).build();
         }
         return settings;
+    }
+
+    public void setSettingsFile(File settingsFile) {
+        this.settingsFile = settingsFile;
+    }
+
+    public static Node getNode(){
+        return node;
     }
 
 }

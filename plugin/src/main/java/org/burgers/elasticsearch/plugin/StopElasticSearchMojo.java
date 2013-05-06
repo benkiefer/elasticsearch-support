@@ -11,7 +11,7 @@ public class StopElasticSearchMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        Node node = StartElasticSearchMojo.node;
+        Node node = StartElasticSearchMojo.getNode();
 
         if (node != null && !node.isClosed()) {
             getLog().info("Stopping Elasticsearch");
