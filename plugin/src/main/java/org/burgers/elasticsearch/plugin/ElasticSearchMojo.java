@@ -21,10 +21,9 @@ import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 public class ElasticSearchMojo extends AbstractMojo {
 
     /**
-     * Settings File Location
+     * Settings file.
      *
-     * @param settingsFile alias="settingsFile"
-     *
+     * @parameter
      */
     private File settingsFile;
 
@@ -36,7 +35,7 @@ public class ElasticSearchMojo extends AbstractMojo {
 
         NodeBuilder nodeBuilder = nodeBuilder();
 
-        if (settings != null){
+        if (settings != null) {
             nodeBuilder.settings(settings);
         }
 
@@ -48,18 +47,11 @@ public class ElasticSearchMojo extends AbstractMojo {
 
     private Settings loadSettingsIfNeeded() {
         Settings settings = null;
-        if (settingsFile != null && settingsFile.exists() && settingsFile.isFile()){
-            getLog().info("Loading settings file from: " + settingsFile.getAbsolutePath());
+        if (settingsFile != null && settingsFile.exists() && settingsFile.isFile()) {
+            getLog().info("Loading settings file: " + settingsFile.getAbsolutePath());
             settings = ImmutableSettings.settingsBuilder().loadFromClasspath(settingsFile.getAbsolutePath()).build();
         }
         return settings;
     }
 
-    public void setSettingsFile(File settingsFile) {
-        this.settingsFile = settingsFile;
-    }
-
-    public File getSettingsFile() {
-        return settingsFile;
-    }
 }
