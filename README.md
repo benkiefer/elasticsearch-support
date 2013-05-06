@@ -2,10 +2,6 @@
 
 A Maven plugin for running elasticsearch and some namespace goodies for instantiating a spring client.
 
-#Todo
-
- - Plugin executions for starting and stopping elasticsearch, similar to cargo's start and stop.
-
 #Client
 
      <elasticsearch:client id="client" settings-file="elasticsearch.yml">
@@ -16,6 +12,8 @@ A Maven plugin for running elasticsearch and some namespace goodies for instanti
 All beans are name-spaced under the client to avoid name collisions.
 
 #Plugin
+
+You can run the plugin with the following configuration... 
 
     <plugin>
         <groupId>org.burgers.elasticsearch</groupId>
@@ -35,3 +33,30 @@ All beans are name-spaced under the client to avoid name collisions.
         </executions>
     </plugin>
 
+Or start and stop it as part of your build.
+
+    <plugin>
+        <groupId>org.burgers.elasticsearch</groupId>
+        <artifactId>elasticsearch-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+            <settingsFile>${basedir}/../path/to/elasticsearch.yml</settingsFile>
+        </configuration>
+        <executions>
+            <execution>
+                <id>start-elasticsearch</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                    <goal>start</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>stop-elasticsearch</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                    <goal>stop</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+	

@@ -41,10 +41,17 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>run-elasticsearch</id>
+                        <id>start-elasticsearch</id>
                         <phase>test-compile</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-elasticsearch</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
                         </goals>
                     </execution>
                 </executions>
