@@ -1,11 +1,10 @@
 #Elasticsearch Support
 
-Looking into the innards of elasticsearch, and how to integrate it with it in a Spring world.
+A Maven plugin for running elasticsearch and some namespace goodies for instantiating a spring client.
 
 #Todo
 
- - Client Schema (note: fluent apis are a bad way to get people to use your code in Spring XML)
- - Plugin?
+ - Plugin executions for starting and stopping elasticsearch, similar to cargo's start and stop.
 
 #Client
 
@@ -15,3 +14,24 @@ Looking into the innards of elasticsearch, and how to integrate it with it in a 
      </elasticsearch:client/>
 
 All beans are name-spaced under the client to avoid name collisions.
+
+#Plugin
+
+    <plugin>
+        <groupId>org.burgers.elasticsearch</groupId>
+        <artifactId>elasticsearch-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+            <settingsFile>${basedir}/../path/to/elasticsearch.yml</settingsFile>
+        </configuration>
+        <executions>
+            <execution>
+                <id>run-elasticsearch</id>
+                <phase>test-compile</phase>
+                <goals>
+                    <goal>run</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+
