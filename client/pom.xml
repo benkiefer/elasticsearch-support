@@ -14,6 +14,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
@@ -34,7 +39,7 @@
                 <executions>
                     <execution>
                         <id>run-elasticsearch</id>
-                        <phase>clean</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>

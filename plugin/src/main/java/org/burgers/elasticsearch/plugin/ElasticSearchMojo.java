@@ -12,6 +12,6 @@ import org.apache.maven.plugin.MojoFailureException;
 public class ElasticSearchMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        System.out.println("I'm running!!!");
+        getLog().info("Starting Elasticsearch");
     }
 }
