@@ -15,7 +15,7 @@ import java.io.File;
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 @Mojo(name = "run", requiresProject = false)
-public class ElasticSearchMojo extends AbstractMojo {
+public class RunElasticSearchMojo extends AbstractMojo {
 
     /*
         Location of Elasticsearch YML settings file
@@ -37,7 +37,6 @@ public class ElasticSearchMojo extends AbstractMojo {
 
         Node node = nodeBuilder.node();
 
-        node.client();
         node.start();
     }
 
