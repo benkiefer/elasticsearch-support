@@ -11,7 +11,7 @@ public class PortParser {
         List<Integer> results = new ArrayList<Integer>();
 
         for (String stringPort : listOfStringPorts) {
-            results.add(Integer.parseInt(stringPort));
+            results.add(Integer.parseInt(stringPort.trim()));
         }
 
         return results;

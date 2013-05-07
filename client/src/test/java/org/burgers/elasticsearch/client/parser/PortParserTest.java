@@ -13,5 +13,12 @@ public class PortParserTest {
         assertTrue(results.contains(123));
         assertTrue(results.contains(456));
     }
+    
+    @Test
+    public void parse_with_spaces(){
+        List<Integer> results = new PortParser().parse("123, 456");
+        assertTrue(results.contains(123));
+        assertTrue(results.contains(456));
+    }
 
 }

@@ -14,15 +14,36 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
     @Test
     public void load_default_id() {
         String schemaDef = "<elasticsearch:client settings-file=\"elasticsearch.yml\">" +
+                                "<elasticsearch:node host=\"localhost\" ports=\"2986\"/>" +
+                            "</elasticsearch:client>";
+
+        prepareContext(schemaDef);
+
+        assertClient("elasticsearchClient", 1);
+    }
+
+    @Test
+    public void load_multiple_nodes() {
+        String schemaDef = "<elasticsearch:client settings-file=\"elasticsearch.yml\">" +
                                 "<elasticsearch:node host=\"localhost\" ports=\"2980,2981\"/>" +
                                 "<elasticsearch:node host=\"localhost\" ports=\"2986\"/>" +
                             "</elasticsearch:client>";
         prepareContext(schemaDef);
 
-        assertClient("elasticsearchClient");
+        assertClient("elasticsearchClient", 3);
     }
 
-    private void assertClient(String beanId) {
+    @Test
+    public void load_multiple_nodes_with_spaces() {
+        String schemaDef = "<elasticsearch:client settings-file=\"elasticsearch.yml\">" +
+                                "<elasticsearch:node host=\"localhost\" ports=\"2980, 2981\"/>" +
+                            "</elasticsearch:client>";
+        prepareContext(schemaDef);
+
+        assertClient("elasticsearchClient", 2);
+    }
+
+    private void assertClient(String beanId, int numberOfAddresses) {
         TransportClient client = context.getBean(beanId, TransportClient.class);
         assertNotNull(client);
 
@@ -34,7 +55,7 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
 
         ImmutableList<TransportAddress> transportAddresses = client.transportAddresses();
 
-        assertEquals(3, transportAddresses.size());
+        assertEquals(numberOfAddresses, transportAddresses.size());
     }
 
     @Test
@@ -45,7 +66,7 @@ public class BeanDefinitionParsingTest extends BeanDefinitionParserHelper {
                             "</elasticsearch:client>";
         prepareContext(schemaDef);
 
-        assertClient("test");
+        assertClient("test", 3);
     }
 
 }
